@@ -1,2 +1,14 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+	import { authClient } from '$lib/auth-client';
+	const session = authClient.useSession();
+</script>
+
+<div>
+	{#if $session.data}
+		<div>
+			<p>
+				Hey {$session?.data?.user.name}
+			</p>
+		</div>
+	{/if}
+</div>
