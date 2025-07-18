@@ -1,28 +1,27 @@
 <script lang="ts">
-    import { Toaster } from "$lib/components/ui/sonner/index.js";
-	import {Separator} from '$lib/components/ui/separator';
+	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
+	import { Toaster } from '$lib/components/ui/sonner/index.js';
 	import '../app.css';
-	import { authClient } from "$lib/auth-client";
-	import Button from "$lib/components/ui/button/button.svelte";
-	import LogOutButton from "$lib/components/LogOutButton.svelte";
-	const session = authClient.useSession();
+	import { ModeWatcher } from 'mode-watcher';
+	import SiteHeader from '$lib/components/SiteHeader.svelte';
+	import AppSidebar from '$lib/components/AppSidebar.svelte';
+
 	let { children } = $props();
 </script>
 
-<Toaster position="top-center" closeButton richColors/>
+<ModeWatcher />
+<Toaster position="top-center" closeButton richColors />
 
-<div class="max-w-7xl mx-auto px-4 py-8">
-    <div class="flex items-center justify-between">
-        <a href="/"><h1 class="text-3xl font-extrabold tracking-tight">Wow Amazing</h1></a>
-        <div class="flex items-center gap-4">
-            {#if $session.data}
-                <span class="text-gray-500">Hi {$session.data.user.name}</span>
-                <LogOutButton />
-            {:else}
-                <Button href="/login" variant="outline">Log In</Button>
-            {/if}
-        </div>
-    </div>
-    <Separator class="my-4" />
-    {@render children()}
-</div>
+<Sidebar.Provider>
+	<AppSidebar />
+	<Sidebar.Inset>
+		<SiteHeader />
+		<div class="flex flex-1 flex-col">
+			<div class="@container/main flex flex-1 flex-col gap-2">
+				<div class="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+					{@render children()}
+				</div>
+			</div>
+		</div>
+	</Sidebar.Inset>
+</Sidebar.Provider>

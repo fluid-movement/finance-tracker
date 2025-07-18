@@ -20,10 +20,7 @@
 			password: password
 		});
 
-		console.log(error);
-
 		if (error?.message) {
-			console.error('Login failed:', error);
 			errorMessage = error.message || 'An error occurred during login.';
 		} else {
 			await goto('/');
@@ -38,7 +35,6 @@
 		});
 
 		if (error?.message) {
-			console.error('Sign up failed:', error);
 			errorMessage = error.message || 'An error occurred during sign up.';
 		} else {
 		    await goto('/');
@@ -46,7 +42,7 @@
 	};
 </script>
 
-<Card.Root class="mx-auto max-w-2xl">
+<Card.Root class="mx-auto max-w-5xl">
 	<Card.Content>
 		<Tabs.Root value={tab}>
 			<Tabs.List class="w-full">
